@@ -23,6 +23,4 @@ RUN wget https://nicrl.s3.amazonaws.com/ddpg.zip
 
 RUN unzip ddpg.zip
 RUN pip install deep-reinforcement-learning/python
-
-
-CMD bash
+RUN pip install torch==1.3
