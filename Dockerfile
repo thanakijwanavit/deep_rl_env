@@ -26,6 +26,10 @@ RUN unzip ddpg.zip
 RUN pip install deep-reinforcement-learning/python
 RUN pip install torch==1.3 gpustat
 
+# install vimrc
+RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && sh ~/.vim_runtime/install_awesome_vimrc.sh
+# install tmuxrc
+RUN git clone https://github.com/gpakosz/.tmux.git&&ln -s -f .tmux/.tmux.conf&&cp .tmux/.tmux.conf.local .
 
 WORKDIR /workspace/deep-reinforcement-learning/p2_continuous-control
 RUN tmux new-session -d -s monitoring htop
