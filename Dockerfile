@@ -14,13 +14,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         lsb-release && \
     rm -rf /var/lib/apt/lists/*
 
-
+# download and install awscli
 RUN curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
+RUN ln -s /usr/local/bin/aws2 /usr/local/bin/aws
 
-RUN echo 'aws=aws2' >> ~/.bashrc
-
+#install ddpg
 RUN wget https://nicrl.s3.amazonaws.com/ddpg.zip
-
 RUN unzip ddpg.zip
+
+
 RUN pip install deep-reinforcement-learning/python
-RUN pip install torch==1.3
+RUN pip install torch==1.3 gpustat
+
+
+WORKDIR /workspace/deep-reinforcement-learning/p2_continuous-control
+RUN tmux new-session -d -s monitoring htop
+RUN tmux new-session -d -s gpu gpustat
